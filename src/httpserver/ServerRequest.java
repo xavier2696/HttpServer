@@ -128,7 +128,7 @@ public class ServerRequest implements Runnable{
 			}
 		}else if(method.equals("POST")){
                     System.out.println("Post succesful");
-                    fileRoute += "C:\\Users\\Oscar Sanchez\\Documents\\NetBeansProjects\\HttpServer\\post.html";		
+                    fileRoute += "post.html";		
 			
 			try{
 				FileInputStream fileStream = new FileInputStream(fileRoute);
@@ -167,7 +167,7 @@ public class ServerRequest implements Runnable{
                     
                 }else if(method.equals("PUT")){
                     System.out.println("PUT successful");
-                    fileRoute += "C:\\Users\\Oscar Sanchez\\Documents\\NetBeansProjects\\HttpServer\\put.html";		
+                    fileRoute += "put.html";		
 			
 			try{
 				FileInputStream fileStream = new FileInputStream(fileRoute);
