@@ -93,6 +93,7 @@ public class ServerRequest implements Runnable{
 			
 			try{
 				FileInputStream fileStream = new FileInputStream(fileRoute);
+                                
 				String type = getFileExtension(fileRoute);
                                 if(token.nextToken().equals("HTTP/1.1")){
                                     statusLine = "HTTP/1.1 200 OK" + CRLF;
@@ -122,20 +123,87 @@ public class ServerRequest implements Runnable{
                                 }else{
                                     statusLine = "HTTP/1.0 404 not found" + CRLF;
                                 }
-				timeLine = "Date: " + fullDateFormat.format(date) + CRLF;
-				headLine = statusLine + closeLine + timeLine + ServerLine + CRLF;
-				output.print(headLine);
-				entityBody = "<HTML>" + "<HEAD><TITLE>404 Not Found</TITLE></HEAD>" +
-						"<BODY>404 Not Found" + "</BODY></HTML>\n";
-				output.write(entityBody.getBytes());
-				resultLine = "Result: file is not found!" + CRLF + CRLF;
+				output.println(statusLine);
+                                output.close();
 			}
 		}else if(method.equals("POST")){
                     System.out.println("Post succesful");
-                    output.print("HTTP/1.1 201 OK"+CRLF);
+                    fileRoute += "C:\\Users\\Oscar Sanchez\\Documents\\NetBeansProjects\\HttpServer\\post.html";		
+			
+			try{
+				FileInputStream fileStream = new FileInputStream(fileRoute);
+				String type = getFileExtension(fileRoute);
+                                if(token.nextToken().equals("HTTP/1.1")){
+                                    statusLine = "HTTP/1.1 200 OK" + CRLF;
+                                }else{
+                                    statusLine = "HTTP/1.0 200 OK" + CRLF;
+                                }
+				timeLine = "Date: " + fullDateFormat.format(date) + CRLF;
+				lengthLine = "Content-Length: " + (new Integer(fileStream.available())).toString() + CRLF;
+				typeLine = getContentType(type) + CRLF;
+				headLine = statusLine + closeLine + timeLine + ServerLine + lengthLine + typeLine + CRLF;
+				output.print(headLine);				
+				
+				if( !(method.equals("HEAD")) ){
+					byte[] buffer = new byte[1024];
+					int bytes = 0;	
+					while ((bytes = fileStream.read(buffer)) != -1) {
+						output.write(buffer, 0, bytes);
+					}
+				}
+				
+				fileStream.close();
+				resultLine = "Result: succeed!" + CRLF + CRLF;
+			}
+			catch(IOException e){
+                            if(token.nextToken().equals("HTTP/1.1")){
+                                    statusLine = "HTTP/1.1 404 not found" + CRLF;
+                                }else{
+                                    statusLine = "HTTP/1.0 404 not found" + CRLF;
+                                }
+				output.println(statusLine);
+                                output.close();
+			}
+                    
                 }else if(method.equals("PUT")){
                     System.out.println("PUT successful");
-                    output.print("HTTP/1.1 200 OK"+CRLF);
+                    fileRoute += "C:\\Users\\Oscar Sanchez\\Documents\\NetBeansProjects\\HttpServer\\put.html";		
+			
+			try{
+				FileInputStream fileStream = new FileInputStream(fileRoute);
+				String type = getFileExtension(fileRoute);
+                                if(token.nextToken().equals("HTTP/1.1")){
+                                    statusLine = "HTTP/1.1 200 OK" + CRLF;
+                                }else{
+                                    statusLine = "HTTP/1.0 200 OK" + CRLF;
+                                }
+				timeLine = "Date: " + fullDateFormat.format(date) + CRLF;
+				lengthLine = "Content-Length: " + (new Integer(fileStream.available())).toString() + CRLF;
+				typeLine = getContentType(type) + CRLF;
+				headLine = statusLine + closeLine + timeLine + ServerLine + lengthLine + typeLine + CRLF;
+				output.print(headLine);				
+				
+				if( !(method.equals("HEAD")) ){
+					byte[] buffer = new byte[1024];
+					int bytes = 0;	
+					while ((bytes = fileStream.read(buffer)) != -1) {
+						output.write(buffer, 0, bytes);
+					}
+				}
+				
+				fileStream.close();
+				resultLine = "Result: succeed!" + CRLF + CRLF;
+			}
+			catch(IOException e){
+                            if(token.nextToken().equals("HTTP/1.1")){
+                                    statusLine = "HTTP/1.1 404 not found" + CRLF;
+                                }else{
+                                    statusLine = "HTTP/1.0 404 not found" + CRLF;
+                                }
+				output.println(statusLine);
+                                output.close();
+			}
+                 
                 }
 		
 	}
