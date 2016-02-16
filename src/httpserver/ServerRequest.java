@@ -192,7 +192,7 @@ public class ServerRequest implements Runnable{
 				}
 				
 				fileStream.close();
-				resultLine = "Result: succeed!" + CRLF + CRLF;
+				resultLine = "Result: Suceed!" + CRLF + CRLF;
 			}
 			catch(IOException e){
                             if(token.nextToken().equals("HTTP/1.1")){
